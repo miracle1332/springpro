@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.board.mapper.BoardMapper"><!-- 네임스페이스 이름을 보고 찾아가기에 이름 잘적어주어야함 -->
+<!-- sql쿼리문 작성 -->
+	<select id="getLists" resultType="kr.board.entity.Board">
+		select * from myboard order by idx desc
+	</select><!-- resultType은 select하고 결과를 묶어줄때 쓰는 타입이고,
+	parameterType은 쿼리에서 넘어오는 값의 타입을 이야기하는 것이다.-->
+
+	<insert id="boardInsert" parameterType="kr.board.entity.Board">
+		insert into myboard(idx, title, content, writer) values(myboard_idx.nextval,#{title},#{content},#{writer})
+	</insert>
+	
+	<select id="boardContent" parameterType="int" resultType="kr.board.entity.Board">
+		select * from myboard where idx=#{idx}
+	</select>
+	
+	<delete id="boardDelete" parameterType="int"> <!-- 넘어오는 타입이 하나인 경우에는 resultType생략가능 -->
+		delete from myboard where idx=#{idx}
+	</delete>
+	
+	<update id="boardUpdate" parameterType="kr.board.entity.Board">
+		update myboard set title=#{title}, content=#{content} where idx=#{idx}
+	</update>
+</mapper>
